@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>drawElements</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        canvas {
+            border: 1px solid black;
+            color: red;
+            background-color: yellowgreen;
+        }
+    </style>
+</head>
+<body>
+    <canvas></canvas>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var canvas = document.querySelector('canvas');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            var c = canvas.getContext('2d');
+
+            // Draw rectangles
+            c.fillStyle = 'white';
+            c.fillRect(100, 100, 100, 100);
+            c.fillStyle = 'purple';
+            c.fillRect(200, 200, 110, 110);
+            c.fillStyle = 'orange';
+            c.fillRect(570, 490, 100, 100);
+
+            // Draw line
+            c.beginPath();
+            c.moveTo(50, 300);
+            c.lineTo(100, 300);
+            c.lineTo(300, 500);
+            c.lineTo(300, 100);
+            c.strokeStyle = 'white';
+            c.stroke();
+
+            // Draw arc or circle
+            c.beginPath();  
+            c.arc(500, 500, 50, 0, Math.PI * 2, false);
+            c.strokeStyle = 'blue';
+            c.stroke();
+
+            //  we can generate may circle using loops 
+            for(let i = 0; i < 5 ;i++){
+ 
+                let x = Math.random() * window.innerWidth;  
+                let y = Math.random() * window.innerHeight;  
+                c.beginPath();  
+            c.arc(x, y, 50, 0, Math.PI * 2, false);
+            c.strokeStyle = 'blue';
+            c.stroke();; 
+            }
+        });
+ 
+    </script>
+</body>
+</html>

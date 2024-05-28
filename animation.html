@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animation</title>
+</head>
+<body>
+    
+    <canvas></canvas>
+
+    <script>
+       document.addEventListener('DOMContentLoaded', function() {
+        var canvas = document.querySelector('canvas');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        var c = canvas.getContext('2d') ; 
+
+        c.beginPath();  
+            c.arc(500, 500, 50, 0, Math.PI * 2, false);
+            c.strokeStyle = 'blue';
+            c.stroke();
+    var x = 200 
+    var y = 400 ; 
+    var dx = 5 
+    var dy = 5  ; 
+    var radious = 50 ; 
+            function animation(){
+                requestAnimationFrame(animation)
+        c.clearRect(0, 0, innerWidth, innerHeight)
+        //  every time we need to cleare the canvas because otherwise it will keep appending in the same page and we wont be able to create the animation 
+                c.beginPath();  
+            c.arc(x, y, radious, 0, Math.PI * 2, false);
+            c.strokeStyle = 'blue';
+            c.stroke();
+            x+=dx;
+            y +=dy
+            if(x+radious>innerWidth||x-radious<0){
+                dx = -dx ;
+            }
+            if(y+radious>innerHeight||y-radious<0){
+                dy = -dy ;
+            }
+            // x+= 1 meanseout velocity is 1 px 
+            // means we are moveing 1 px at a time 
+            }
+            animation();
+
+        });
+    </script>
+</body>
+</html>

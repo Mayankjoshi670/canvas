@@ -15,39 +15,67 @@
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        var c = canvas.getContext('2d') ; 
+        var c = canvas.getContext('2d'); 
 
-        c.beginPath();  
-            c.arc(500, 500, 50, 0, Math.PI * 2, false);
-            c.strokeStyle = 'blue';
-            c.stroke();
-    var x = 200 
-    var y = 400 ; 
-    var dx = 5 
-    var dy = 5  ; 
-    var radious = 50 ; 
-            function animation(){
-                requestAnimationFrame(animation)
-        c.clearRect(0, 0, innerWidth, innerHeight)
-        //  every time we need to cleare the canvas because otherwise it will keep appending in the same page and we wont be able to create the animation 
+
+        function getRandomColor() {
+    
+    const randomColor = Math.floor(Math.random() * 16777215);
+    // Convert the random number to a hexadecimal string and pad with leading zeros if necessary
+    const hexColor = `#${randomColor.toString(16).padStart(6, '0')}`;
+    return hexColor;
+}
+        function Circle(x, y, dx, dy, radius) {
+            this.x = x; 
+            this.y = y;
+            this.dx = dx;
+            this.dy = dy;
+            this.radius = radius;
+
+            this.draw = function() {
                 c.beginPath();  
-            c.arc(x, y, radious, 0, Math.PI * 2, false);
-            c.strokeStyle = 'blue';
-            c.stroke();
-            x+=dx;
-            y +=dy
-            if(x+radious>innerWidth||x-radious<0){
-                dx = -dx ;
+                c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+                c.strokeStyle = getRandomColor();
+                c.fillStyle = getRandomColor();
+                c.fill() ; 
+                c.stroke();
             }
-            if(y+radious>innerHeight||y-radious<0){
-                dy = -dy ;
-            }
-            // x+= 1 meanseout velocity is 1 px 
-            // means we are moveing 1 px at a time 
-            }
-            animation();
 
-        });
+            this.update = function() {
+                if (this.x + this.radius > innerWidth || this.x - this.radius < 0) {
+                    this.dx = -this.dx;
+                }
+                if (this.y + this.radius > innerHeight || this.y - this.radius < 0) {
+                    this.dy = -this.dy;
+                }
+
+                this.x += this.dx;
+                this.y += this.dy;
+                this.draw();
+            }
+        }
+
+        var circles = [];
+        for (var i = 0; i < 100; i++) {
+            var radius = 30;
+            var x = Math.random() * (innerWidth - 2 * radius) + radius;
+            var y = Math.random() * (innerHeight - 2 * radius) + radius;
+            var dx = (Math.random() - 0.5) * 4;
+            var dy = (Math.random() - 0.5) * 4;
+            circles.push(new Circle(x, y, dx, dy, radius));
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            c.clearRect(0, 0, innerWidth, innerHeight);
+
+            for (var i = 0; i < circles.length; i++) {
+                circles[i].update();
+            }
+        }
+
+        animate();
+       });
     </script>
 </body>
 </html>
